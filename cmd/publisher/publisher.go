@@ -3,12 +3,19 @@ package main
 import (
 	"io/ioutil"
 	"log"
+	"time"
 
 	"github.com/nats-io/stan.go"
 )
 
 func main() {
-	file, err := ioutil.ReadFile("../../not_model.json")
+	sendFile("../../model.json")
+	time.Sleep(5 * time.Second)
+	sendFile("../../invalid_model.json")
+
+}
+func sendFile(path string) {
+	file, err := ioutil.ReadFile(path)
 	if err != nil {
 		log.Println(err)
 		return
@@ -27,5 +34,4 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-
 }
